@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <title>adash</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/adash.css">
+    <script src="assets/deepstream-2.1.1.js" type="text/javascript"></script>
+    <script>
+        'use strict';
+
+        const adashConfig = {
+            'username': 'adash',
+            'deepstreamURL': '0.0.0.0:6020/deepstream'
+        };
+
+        // Warning: Aggressive reconnect settings
+        const deepstreamConfig = {
+            reconnectIntervalIncrement: 100, // # of MS until next reconnection attempt, incremented per each retry
+            maxReconnectInterval: 1000,
+            maxReconnectAttempts: 600
+        };
+
+        const ds = deepstream(adashConfig['deepstreamURL'], deepstreamConfig);
+        window.ds = ds;
+
+        ds.login({'username': adashConfig['username']}, function(success, data) {
+                    if (success) {
+                        console.log('websocket login success');
+                    } else {
+                        console.log('websocket login failed')
+                    }
+                }
+        );
+
+
+        var alerts = document.getElementById('alerts');
+
+        window.ds.event.subscribe('alert', function(data){
+                    var aspan = document.createElement('span');
+                    aspan.classList.add('alertItem');
+                    aspan.innerText = data;
+                    alerts.appendChild(aspan);
+                }
+        );
+
+    </script>
+
+</head>
+<body>
+<header></header>
+<h1>adash alerts</h1>
+<hr>
+<div id="alerts">
+
+</div>
+<footer></footer>
+</body>
+</html>
