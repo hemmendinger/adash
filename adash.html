@@ -34,13 +34,12 @@
                 }
         );
 
-
-        var alerts = document.getElementById('alerts');
-
         window.ds.event.subscribe('alert', function(data){
+                    var alerts = document.getElementById('alerts');
                     var aspan = document.createElement('span');
+
                     aspan.classList.add('alertItem');
-                    aspan.innerText = data;
+                    aspan.innerText = data['data'];
                     alerts.appendChild(aspan);
                 }
         );
