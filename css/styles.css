@@ -1,0 +1,10 @@
+/* General Styles */
+
+/** Begin resets **/
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+/** End resets **/
